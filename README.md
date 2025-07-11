@@ -6,6 +6,7 @@
 - [bfs (グリッド用)](grid_bfs.py)
 - [各種遅延セグ木](lazy_segtree.py)
 - [行列累乗](matrix.py)
+- [ダブリング](doubling.py)
 - [mod組み合わせ](mod_cmb.py)
 - [ポテンシャル付きUF](potentialized_uf.py)
 - [転倒数](rotate.py)
