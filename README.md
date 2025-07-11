@@ -11,3 +11,4 @@
 - [転倒数](rotate.py)
 - [trie木](trie.py)
 - [巡回セールスマン](tsp.py)
+- [篩](sieve.py)
