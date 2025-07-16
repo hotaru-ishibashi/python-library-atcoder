@@ -23,6 +23,17 @@
     ],
     "description": "クエリ処理のテンプレート"
   },
+  "multi_test": {
+    "prefix": " multi",
+    "body": [
+      "def solve():",
+      "    ${1}",
+      "",
+      "for _ in range(int(input)):",
+      "    solve()"
+    ],
+    "description": "マルチテストケースのテンプレート"
+  },
   "yesno": {
     "prefix": "yesno",
     "body": ["print('Yes' if ${1} else 'No')"],
