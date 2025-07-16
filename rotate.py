@@ -12,9 +12,8 @@ def rotate(A):
     # print(comp)
     tree = FenwickTree(N)
 
-    # R = [0] * 10
-    res = [0] * 10
-    for i in range(10):
+    res = [0] * N
+    for i in range(N):
         a = comp[i]
 
         tree.add(a, 1)
