@@ -22,5 +22,10 @@
       "    # elif query[0] == 3:"
     ],
     "description": "クエリ処理のテンプレート"
+  },
+  "yesno": {
+    "prefix": "yesno",
+    "body": ["print('Yes' if ${1} else 'No')"],
+    "description": "YesNo出力"
   }
 }
