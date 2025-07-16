@@ -37,7 +37,7 @@
   "meguru": {
     "prefix": " meguru",
     "body": [
-      "def judge():",
+      "def judge(k):",
       "    ${3}",
       "",
       "ok = ${1}",
