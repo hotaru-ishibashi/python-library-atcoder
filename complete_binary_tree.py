@@ -1,5 +1,5 @@
 
-class CompletelyBinaryTree:
+class CompleteBinaryTree:
     def __init__(self, N):
         self.n = N
         self.depth = N.bit_length()
