@@ -55,5 +55,14 @@
     "prefix": "yesno",
     "body": ["print('Yes' if ${1} else 'No')"],
     "description": "YesNo出力"
+  },
+  "encode": {
+    "prefix": "encode",
+    "body": [
+      "enckey = 10**9",
+      "encode = lambda x, y: x*enckey + y",
+      "decode = lambda e: (e//enckey, e%enckey)"
+    ],
+    "description": "pair値をエンコード"
   }
 }
