@@ -56,6 +56,11 @@
     "body": ["print('Yes' if ${1} else 'No')"],
     "description": "YesNo出力"
   },
+  "ceil": {
+    "prefix": "ceil",
+    "body": ["ceil = lambda n, d: (n + d - 1) // d"],
+    "description": "誤差がでないceil"
+  },
   "encode": {
     "prefix": "encode",
     "body": [
