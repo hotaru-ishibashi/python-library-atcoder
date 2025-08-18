@@ -45,7 +45,6 @@ class IMOS2D:
                 csum += self.grid[i][j]
                 res[i][j] = csum
         for j in range(self.W):
-            csum = 0
             for i in range(1, self.H):
                 res[i][j] += res[i-1][j]
         return res
