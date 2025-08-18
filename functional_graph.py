@@ -47,4 +47,13 @@ if __name__ == "__main__":
     for i in range(N):
         G[i] = P[i]-1
 
-    print(detect_cycles(G))
+    cycles, _ = detect_cycles(G)
+    ans = [None] * N
+    for cycle in cycles:
+        clen = len(cycle)
+        move = pow(2, K, clen)
+
+        for i in range(clen):
+            ans[cycle[i]] = cycle[(i+move)%clen] + 1
+
+    print(*ans)
