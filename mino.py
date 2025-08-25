@@ -21,6 +21,8 @@ class MINO:
                     self.bottom = max(self.bottom, i)
                     self.left = min(self.left, j)
                     self.right = max(self.right, j)
+        if self.top == 10**9:
+            raise ValueError("No # in grid")
         self.move_top_left()
 
     @staticmethod
@@ -67,7 +69,7 @@ class MINO:
             for j in range(self.W):
                 if self.mino&1<<(i*self.W + j):
                     shift = (i*self.W + (self.W-1-j))
-                res |= 1 << shift
+                    res |= 1 << shift
         r = MINO(res, self.H, self.W)
         r.move_top_left()
         return r
@@ -78,7 +80,7 @@ class MINO:
             for j in range(self.W):
                 if self.mino&1<<(i*self.W + j):
                     shift = ((self.H-1-i)*self.W + j)
-                res |= 1 << shift
+                    res |= 1 << shift
         r = MINO(res, self.H, self.W)
         r.move_top_left()
         return r

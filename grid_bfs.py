@@ -1,7 +1,7 @@
 from collections import deque
 
 def grid_bfs(G, H, W, s):
-    que = deque([s])
+    que = deque((s[0], s[1]))
     dist = [[-1] * W for _ in range(H)]
     dist[s[0]][s[1]] = 0
     df = [[-1, 0], [0, -1], [1, 0], [0, 1]]
