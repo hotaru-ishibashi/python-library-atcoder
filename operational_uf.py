@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 
-class MonoidUF:
+class OperationalUF:
     def __init__(self, n: int, op, vals):
         self.n = n
         self.par = [-1] * n
