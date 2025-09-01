@@ -49,3 +49,49 @@ class IMOS2D:
                 res[i][j] += res[i-1][j]
         return res
     
+
+class IMOS3D:
+    def __init__(self, X, Y, Z):
+        self.X = X
+        self.Y = Y
+        self.Z = Z
+        # +1してバッファを持たせる
+        self.grid = [[[0] * (Z + 1) for _ in range(Y + 1)] for _ in range(X + 1)]
+
+    def add(self, x_start, y_start, z_start, x_end, y_end, z_end, v=1):
+        """
+        立方体領域 [x_start, x_end), [y_start, y_end), [z_start, z_end) に v を加算
+        """
+        g = self.grid
+        g[x_start][y_start][z_start] += v
+        g[x_start][y_start][z_end]   -= v
+        g[x_start][y_end][z_start]   -= v
+        g[x_start][y_end][z_end]     += v
+        g[x_end][y_start][z_start]   -= v
+        g[x_end][y_start][z_end]     += v
+        g[x_end][y_end][z_start]     += v
+        g[x_end][y_end][z_end]       -= v
+
+    def calc(self):
+        """
+        区間加算結果を計算。O(X*Y*Z)
+        """
+        res = [[[0] * self.Z for _ in range(self.Y)] for _ in range(self.X)]
+        # x方向に累積和
+        for x in range(self.X):
+            for y in range(self.Y):
+                csum = 0
+                for z in range(self.Z):
+                    csum += self.grid[x][y][z]
+                    res[x][y][z] = csum
+        # y方向に累積和
+        for x in range(self.X):
+            for y in range(1, self.Y):
+                for z in range(self.Z):
+                    res[x][y][z] += res[x][y-1][z]
+        # z方向に累積和
+        for x in range(1, self.X):
+            for y in range(self.Y):
+                for z in range(self.Z):
+                    res[x][y][z] += res[x-1][y][z]
+        return res
