@@ -2,15 +2,7 @@ from atcoder.lazysegtree import LazySegTree
 
 A = [1, 3, 5, -2, -10, 100, 0]
 inf = float("inf")
-# range add / range sum
-tree = LazySegTree(
-    lambda d1, d2: (d1[0]+d2[0], d1[1]+d2[1]), 
-    (0, 0), 
-    lambda l, d: (d[0]+d[1]*l, d[1]), 
-    lambda l1, l2: l1+l2,
-    0,
-    [[e, 1] for e in A]
-)
+
 # range add / range sum
 tree = LazySegTree(
     lambda d1, d2: (d1[0]+d2[0], d1[1]+d2[1]), 
@@ -26,7 +18,7 @@ tree = LazySegTree(
     -inf, 
     lambda l, d: d + l, 
     lambda l1, l2: l1+l2,
-    -inf,
+    0,
     0
 )
 # range add / range min
@@ -35,19 +27,10 @@ tree = LazySegTree(
     inf, 
     lambda l, d: d + l, 
     lambda l1, l2: l1+l2,
-    inf,
+    0,
     0
 )
 
-# range add / range sum
-tree = LazySegTree(
-    lambda d1, d2: (d1[0]+d2[0], d1[1]+d2[1]), 
-    (0, 0), 
-    lambda l, d: (d[0]+d[1]*l, d[1]), 
-    lambda l1, l2: l1+l2,
-    0,
-    [[e, 1] for e in A]
-)
 
 ID = 8e18
 # range change / range sum
