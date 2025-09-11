@@ -1,29 +1,31 @@
-import numpy as np
-from sys import exit
+"""
+行列のK乗をmodで求める
+"""
+def matrix_power(matrix, K, mod=998244353):
+    def mul(M, N):
+        n1 = len(M)
+        n2 = len(M[0])
+        n3 = len(N[0])
+        L = [[0] * n3 for _ in range(n1)]
+        for i in range(n1):
+            for j in range(n3):
+                for k in range(n2):
+                    L[i][j] = (L[i][j] + M[i][k] * N[k][j]) % mod
+        return L
 
-# 数列aの第X項を求める
-X = 100
-if X == 1:
-    # TODO コーナーケース
-    print()
-    exit()
+    bits = K.bit_length()
 
-# TODO [a2, a1]
-s = np.array([])
-# TODO 遷移行列
-matrix = np.array([[], []])
-bits = 40
+    dp = [None] * (bits+1)
+    dp[0] = matrix
+    for i in range(1, bits+1):
+        nex = mul(dp[i-1], dp[i-1], mod)
+        dp[i] = nex
 
-dp = [None] * (bits+1)
-dp[0] = matrix
-for i in range(1, bits+1):
-    nex = np.matmul(dp[i-1], dp[i-1])
-    # TODO 必要に応じてmodとったり
-    dp[i] = nex
-    
-for bit in range(bits+1):
-    if (X-2)&(1<<bit):
-        s = np.matmul(dp[bit], s)
-        # TODO 必要に応じてmodとったり
+    s = [[0] * len(matrix) for _ in range(len(matrix))]
+    for i in range(len(matrix)):
+        s[i][i] = 1
+    for bit in range(bits+1):
+        if K&(1<<bit):
+            s = mul(dp[bit], s, mod)
 
-print(s[0])
+    return s
