@@ -13,13 +13,19 @@ class IMOS:
     def calc(self):
         """ 区間加算結果を計算。O(N)
         """
-        res = []
-        csum = 0
+        cs = [0]
         for a in self.arr:
-            csum += a
-            res.append(csum)
-        return res
+            cs.append(cs[-1] + a)
+        self.csum = cs
+        return cs
     
+    """
+    区間和[l, r)を計算 事前にimos.calc()すること
+    """ 
+    def seg_sum(self, l, r):
+        if not self.csum:
+            raise ValueError("calc first")
+        return self.csum[r] - self.csum[l]
 
 class IMOS2D:
     csum = None

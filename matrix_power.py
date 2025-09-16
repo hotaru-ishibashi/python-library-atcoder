@@ -18,7 +18,7 @@ def matrix_power(matrix, K, mod=998244353):
     dp = [None] * (bits+1)
     dp[0] = matrix
     for i in range(1, bits+1):
-        nex = mul(dp[i-1], dp[i-1], mod)
+        nex = mul(dp[i-1], dp[i-1])
         dp[i] = nex
 
     s = [[0] * len(matrix) for _ in range(len(matrix))]
@@ -26,6 +26,6 @@ def matrix_power(matrix, K, mod=998244353):
         s[i][i] = 1
     for bit in range(bits+1):
         if K&(1<<bit):
-            s = mul(dp[bit], s, mod)
+            s = mul(dp[bit], s)
 
     return s
