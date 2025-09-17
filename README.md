@@ -22,3 +22,4 @@
 - [imos(1D,2D)](imos.py)
 - [functionalgraph](functional_graph.py)
 - [ポリオミノ](mino.py)
+- [ゼータ/メビウス変換](zeta_mobius.py)
