@@ -10,6 +10,9 @@ class Namori:
         self.degs[u] += 1
         self.degs[v] += 1
 
+    """
+    roots[i]: 頂点iが閉路上の頂点の場合: -1、それ以外の場合: 閉路上の頂点を根としたときの根
+    """
     def detect_cycle(self):
         cycle = [True] * self.N
 
@@ -46,10 +49,10 @@ class Namori:
                     
         return roots
 
-
-N = int(input())
-namori = Namori(N)
-for i in range(N):
-    u, v = map(lambda x:int(x)-1, input().split())
-    namori.add_edge(u, v)
-roots = namori.detect_cycle()
+if __name__ == "__main__":
+    N = int(input())
+    namori = Namori(N)
+    for i in range(N):
+        u, v = map(lambda x:int(x)-1, input().split())
+        namori.add_edge(u, v)
+    roots = namori.detect_cycle()
