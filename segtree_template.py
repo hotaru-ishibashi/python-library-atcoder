@@ -4,7 +4,8 @@ class Node:
     def __init__(self, val=0):
         self.val = val
         pass
-    
+
+
 def op(n1, n2):
     nn = Node()
     nn.val = n1.val + n2.val
