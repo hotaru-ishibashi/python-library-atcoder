@@ -21,7 +21,6 @@ class GreaterHeapQue:
     def push(self, val):
         heappush(self.que, _MaxHeapWrapper(val))
 
-
     def top(self):
         return self.que[0].obj
 

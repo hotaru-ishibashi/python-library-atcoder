@@ -32,31 +32,30 @@ tree = LazySegTree(
 )
 
 
-ID = 8e18
 # range change / range sum
 tree = LazySegTree(
     lambda d1, d2: (d1[0]+d2[0], d1[1]+d2[1]), 
     (0, 0), 
-    lambda l, d: d if l == ID else (l*d[1], d[1]), 
-    lambda l1, l2: l2 if l1 == ID else l1,
-    ID,
+    lambda l, d: d if l == None else (l*d[1], d[1]), 
+    lambda l1, l2: l2 if l1 == None else l1,
+    None,
     [[e, 1] for e in A]
 )
 # range change / range max
 tree = LazySegTree(
     max, 
     -inf, 
-    lambda l, d: d if l == ID else l, 
-    lambda l1, l2: l2 if l1 == ID else l2,
-    ID,
+    lambda l, d: d if l == None else l, 
+    lambda l1, l2: l2 if l1 == None else l1,
+    None,
     A
 )
 # range change / range min
 tree = LazySegTree(
     min, 
     inf, 
-    lambda l, d: d if l == ID else l, 
-    lambda l1, l2: l2 if l1 == ID else l2,
-    ID,
+    lambda l, d: d if l == None else l, 
+    lambda l1, l2: l2 if l1 == None else l1,
+    None,
     A
 )
