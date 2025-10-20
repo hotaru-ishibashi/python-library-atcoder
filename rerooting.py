@@ -20,14 +20,12 @@ class Rerooting:
         dp_down = [e for _ in range(n)]
         Kids = [[] for _ in range(n)]
         parent = [-1] * n
-        order = []
 
         # --- dfs1: 行きがけ順 + 帰りがけ処理をstackで ---
         stack = [(root, 0)]  # (v, state) state=0: 行きがけ, 1: 帰りがけ
         while stack:
             v, state = stack.pop()
             if state == 0:
-                order.append(v)
                 stack.append((v, 1))
                 for nv in self.adj[v]:
                     if nv == parent[v]:
