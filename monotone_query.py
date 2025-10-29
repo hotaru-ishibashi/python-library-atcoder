@@ -60,3 +60,5 @@ class MonotoneQueryTree:
         if r-l <= 1:
             return True
         return self.bit.sum(l, r-1) == 0
+
+mqt = MonotoneQueryTree([],)
