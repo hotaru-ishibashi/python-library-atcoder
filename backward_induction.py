@@ -4,23 +4,23 @@ from collections import deque
 G: 有向グラフ
 """
 def backward_induction(G):
-    WIN = 1
-    LOSE = 0
-    TBD = -1
+    WIN = 1; LOSE = 0; TBD = -1
     N = len(G)
     deg = [0] * N
     Ginv = [[] for _ in range(N)]
-    dp = [-1] * N
+    dp = [TBD] * N
     queue = deque()
 
+    # 初期で勝敗確定する頂点
     for v in range(N):
         deg[v] = len(G[v])
+        for nv in G[v]:
+            Ginv[nv].append(v)
+        
         if deg[v] == 0:
             dp[v] = LOSE
             queue.append(v)
 
-        for nv in G[v]:
-            Ginv[nv].append(v)
     
     while len(queue):
         cv = queue.popleft()
