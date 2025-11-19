@@ -1,7 +1,7 @@
 from typing import List, Dict
 from random import randrange
 
-class RangeSetHash:
+class RangeMultiSetHash:
     def __init__(self, V: List[int], table: Dict[int, int]):
         self.csum = [0]
         for e in V:
@@ -13,8 +13,7 @@ class RangeSetHash:
 
     def hash(self, l, r):
         return self.csum[r] - self.csum[l]
-    
 table = {}
-rsh = RangeSetHash([1, 2, 3, 2, 3], table)
+rsh = RangeMultiSetHash([1, 2, 3, 2, 3], table)
 
 print(rsh.hash(1, 3) == rsh.hash(3, 5))
