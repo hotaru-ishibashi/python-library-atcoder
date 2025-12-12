@@ -10,14 +10,14 @@ def lowlink(N, G):
         low = order
 
         inc = 1
-        for nv in G[v]:
+        for nv in G[v]: 
             if ords[nv] == -1:
                 dfs(nv, order+inc)
                 inc += 1
             nlow = lows[nv]
             if nlow > order:
                 lows[nv] = order
-            low = min(low, nlow)
+                low = min(low, nlow)
 
         lows[v] = low
         return low

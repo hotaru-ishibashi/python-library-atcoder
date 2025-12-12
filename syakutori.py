@@ -3,9 +3,8 @@ N = 10
 A = [3, 5, 11, 2, 0, 1, 9, 5, 2, 8]
 thresh = 7
 
-def syakutori(N, A, e, op, inv, P):
+def syakutori(A, e, op, inv, P):
     '''
-    :param int N: 数列長
     :param List[T] A: 走査対象数列
     :param T e: 単位元
     :param (T, T) -> T op: 演算
@@ -37,5 +36,5 @@ def syakutori(N, A, e, op, inv, P):
 def P(accum, nex):
     return accum <= 7
 
-res = syakutori(N, A, 0, lambda x, y: x+y, lambda x: -x, P)
+res = syakutori(A, 0, lambda x, y: x+y, lambda x: -x, P)
 print(res)
