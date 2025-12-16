@@ -4,7 +4,8 @@
     "body": [
       "G = [[] for _ in range(N)]",
       "for _ in range(M):",
-      "    u, v = map(lambda x: int(x)-1, input().split())",
+      "    u, v = map(int, input().split())",
+      "    u-=1; v-=1",
       "    G[u].append(v)",
       "    G[v].append(u)"
     ],
@@ -72,16 +73,12 @@
   },
   "input_list": {
     "prefix": "input_list",
-    "body": [
-      "map(int, input().split())"
-    ],
+    "body": ["map(int, input().split())"],
     "description": "リスト形式入力受け取り"
   },
   "input_list_zeroidx": {
     "prefix": "input_list_zero_index",
-    "body": [
-      "map(lambda x:int(x)-1, input().split())"
-    ],
+    "body": ["map(lambda x:int(x)-1, input().split())"],
     "description": "リスト形式入力受け取り"
   }
 }
