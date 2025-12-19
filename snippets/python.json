@@ -80,5 +80,17 @@
     "prefix": "input_list_zero_index",
     "body": ["map(lambda x:int(x)-1, input().split())"],
     "description": "リスト形式入力受け取り"
+  },
+  "compress": {
+    "prefix": "compression",
+    "body": [
+      "As = sorted(list(set(A)))",
+      "cmp = {}",
+      "for idx, a in enumerate(As):",
+      "    if cmp.get(a) is None:",
+      "        cmp[a] = idx",
+      "Acmp = [cmp[a] for a in A]"
+    ],
+    "description": "座標圧縮"
   }
 }
