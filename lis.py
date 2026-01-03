@@ -5,7 +5,7 @@ def LIS(A):
     N = len(A)
 
     dp = [inf] * (N+1)
-    dp[0] = 0
+    dp[0] = -inf
     # A[i]が増加列の何番目か
     idx_memo = [None] * N
 
