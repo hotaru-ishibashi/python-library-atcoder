@@ -31,3 +31,6 @@ class CompositeModComb:
 
     def comb(self, n, r):
         return self.memo[n][r]
+    
+cmc = CompositeModComb(100, 998244353)
+print(cmc.comb(97, 23))
