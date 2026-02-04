@@ -99,5 +99,16 @@
       "range_sum = lambda l, r: S[r] - S[l]"
     ],
     "description": "累積和"
+  },
+  "compare": {
+    "prefix": "cmp",
+    "body": [
+      "from functools import cmp_to_key",
+      "def cmp(a, b):",
+      "    if a > b: return 1",
+      "    elif a == b: return 0",
+      "    else: return -1"
+    ],
+    "description": "比較関数"
   }
 }
