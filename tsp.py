@@ -14,6 +14,7 @@ def tsp(G, S=[0]):
             if bit & (1<<u) == 0:
                 continue
             for v in range(V):
+                if bit & (1<<v): continue
                 nbit = bit | 1 << v
                 dp[nbit][v] = min(dp[nbit][v], dp[bit][u] + G[u][v])
     return dp
