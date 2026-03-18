@@ -110,5 +110,10 @@
       "    else: return -1"
     ],
     "description": "比較関数"
+  },
+  "debug": {
+    "prefix": "debug",
+    "body": ["print(${1}, file=sys.stderr)"],
+    "description": "デバッグ出力"
   }
 }
