@@ -10,7 +10,7 @@ class DigitDP:
         """
         Args:
             init_state: dpの状態の初期値 
-                Tips: 直近の桁を持つときは0にしておいて、leading_zeroで条件分岐するとよい
+                Tips: 直近の桁を持つときの初期値は0にしておいて、leading_zeroで条件分岐するとよい
             transition: dpの状態、集計値の遷移関数(state, next_digit, leading_zero, accum) => next_state, next_accum
             init_accum: dpの集計値の初期値
             op: dpの集計値の合成関数
@@ -44,7 +44,7 @@ class DigitDP:
 # サンプル: N以下で、隣接する桁同士の積の和の最大値
 ######################
 init_state = 0
-init_accum = 1
+init_accum = 0
 def transition(state, d, leading_zero, accum):
     pre_d = state
     next_state = d
@@ -53,8 +53,10 @@ def transition(state, d, leading_zero, accum):
     return next_state, next_accum
 def op(acu1, acu2):
     return max(acu1, acu2)
+e = 0
+
 N = [int(c) for c in input().strip()]
 digitdp = DigitDP(N)
-res = digitdp.solve(init_state, transition, init_accum, op, 0)
+res = digitdp.solve(init_state, transition, init_accum, op, e)
 for k, v in res.items():
     print(k, v)
