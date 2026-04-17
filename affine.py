@@ -21,7 +21,7 @@ class Affine:
         self.compose(mat)
 
     """
-    半時計回りに90°回転
+    時計回りに90°回転
     """
     def rotate90(self):
         mat = [0, 1, 0, 
@@ -30,7 +30,7 @@ class Affine:
         self.compose(mat)
 
     """
-    時計回りに90°回転
+    反時計回りに90°回転
     """
     def rotate90cc(self):
         mat = [0, -1, 0, 
