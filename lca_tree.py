@@ -49,7 +49,7 @@ class LCATree:
             u, v = v, u
 
         diff = self.depth[u] - self.depth[v]
-        u = self.level_ancestor(u, diff)
+        u = self.kth_ancestor(u, diff)
 
         if u == v:
             return u
@@ -79,7 +79,7 @@ class LCATree:
             return self.parent[0][u]
         # v が u の部分木側にある
         # v を depth[u] + 1 まで持ち上げる
-        return self.level_ancestor(v, self.depth[v] - self.depth[u] - 1)
+        return self.kth_ancestor(v, self.depth[v] - self.depth[u] - 1)
     
 
 N = int(input())
