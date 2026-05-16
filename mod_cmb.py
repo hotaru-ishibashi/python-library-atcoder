@@ -13,7 +13,6 @@ def C(n, k):
     if k > n: return 0
     return fac[n] * ifac[n-k] * ifac[k] % mod
 def H(n, k):
-    if k > n: return 0
     return C(n+k-1, k)
 
 class CompositeModComb:
