@@ -15,7 +15,8 @@ class Doubling:
 
         for i in range(1, self.digit+1):
             for j in range(N):
-                dp[i][j] = dp[i-1][dp[i-1][j]]
+                k = dp[i-1][j] # 中継地点 
+                dp[i][j] = dp[i-1][k]
         self.dp = dp
 
     """
@@ -25,6 +26,7 @@ class Doubling:
     def query(self, n, K):
         if K > (1 << self.digit):
             raise ValueError("too large K")
+        
         
         for bit in range(self.digit):
             if K & (1<<bit):
