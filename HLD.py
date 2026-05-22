@@ -1,3 +1,4 @@
+
 class HLD:
     """
     Heavy-Light Decomposition
@@ -21,69 +22,113 @@ class HLD:
         self.n = n
         self.g = graph
         self.root = root
+
         self.parent = [-1] * n
         self.depth = [0] * n
+
         self.subtree = [1] * n
         self.heavy = [-1] * n
+
         self.head = [0] * n
+
         # v -> DFS order
         self.id = [0] * n
+
         # DFS order -> v
         self.vertex = [0] * n
-        self._cur = 0
+
         self._dfs_size(root)
         self._dfs_hld(root, root)
 
-    def _dfs_size(self, v, p=-1):
+    def _dfs_size(self, root):
         """
-        subtree size と heavy child を計算
-        """
+        非再帰 DFS
 
-        self.parent[v] = p
-
-        max_size = 0
-
-        for to in self.g[v]:
-
-            if to == p:
-                continue
-
-            self.depth[to] = self.depth[v] + 1
-
-            self._dfs_size(to, v)
-
-            self.subtree[v] += self.subtree[to]
-
-            if self.subtree[to] > max_size:
-                max_size = self.subtree[to]
-                self.heavy[v] = to
-
-    def _dfs_hld(self, v, h):
-        """
-        id / vertex / head を振る
+        - parent
+        - depth
+        - subtree
+        - heavy
         """
 
-        self.head[v] = h
+        order = []
 
-        self.id[v] = self._cur
-        self.vertex[self._cur] = v
+        stack = [root]
 
-        self._cur += 1
+        self.parent[root] = -1
+        self.depth[root] = 0
 
-        # heavy edge を先に辿る
-        if self.heavy[v] != -1:
-            self._dfs_hld(self.heavy[v], h)
+        # DFS order
+        while stack:
 
-        # light edge
-        for to in self.g[v]:
+            v = stack.pop()
 
-            if to == self.parent[v]:
-                continue
+            order.append(v)
 
-            if to == self.heavy[v]:
-                continue
+            for to in self.g[v]:
 
-            self._dfs_hld(to, to)
+                if to == self.parent[v]:
+                    continue
+
+                self.parent[to] = v
+                self.depth[to] = self.depth[v] + 1
+
+                stack.append(to)
+
+        # post-order
+        for v in reversed(order):
+
+            max_size = 0
+
+            for to in self.g[v]:
+
+                if to == self.parent[v]:
+                    continue
+
+                self.subtree[v] += self.subtree[to]
+
+                if self.subtree[to] > max_size:
+                    max_size = self.subtree[to]
+                    self.heavy[v] = to
+
+    def _dfs_hld(self, root, h):
+        """
+        非再帰 HLD DFS
+
+        - id
+        - vertex
+        - head
+        """
+
+        stack = [(root, h)]
+
+        cur = 0
+
+        while stack:
+
+            v, h = stack.pop()
+
+            # heavy path を一直線に処理
+            while v != -1:
+
+                self.head[v] = h
+
+                self.id[v] = cur
+                self.vertex[cur] = v
+
+                cur += 1
+
+                # light edge は後で処理
+                for to in reversed(self.g[v]):
+
+                    if to == self.parent[v]:
+                        continue
+
+                    if to == self.heavy[v]:
+                        continue
+
+                    stack.append((to, to))
+
+                v = self.heavy[v]
 
     def lca(self, u, v):
         """
@@ -118,9 +163,6 @@ class HLD:
     def subtree_range(self, v):
         """
         部分木区間 [l, r)
-
-        subtree(v)
-        <=> [l, r)
         """
 
         l = self.id[v]
@@ -170,7 +212,6 @@ class HLD:
         l = min(self.id[u], self.id[v])
         r = max(self.id[u], self.id[v]) + 1
 
-        # edge query では LCA を除外
         if edge:
             l += 1
 
@@ -182,8 +223,6 @@ class HLD:
         """
         path(u,v) 上の k 番目の頂点
         (0-indexed)
-
-        存在しなければ -1
         """
 
         l = self.lca(u, v)
@@ -218,6 +257,7 @@ class HLD:
             )
 
             v = self.parent[h]
+
 
 # ========= サンプル =========
 n = 5
