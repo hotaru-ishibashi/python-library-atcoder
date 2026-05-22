@@ -240,21 +240,19 @@ print(f"{hld.vertex=}")
 
 ### 頂点属性 ###
 A = [0, 1, 2, 3, 4]
-init_vertex = [None] * n
-for v in range(n):
-    init_vertex[hld.id[v]] = A[v]
+init_vertex = [A[v] for v in hld.vertex]
 LR_vertex = hld.path_ranges(2, 3, edge=False)
 print(f"{init_vertex=}")    
 print(f"2-3: {LR_vertex=}")    
 #################
 
 ### 辺属性 ###
-init_path = [0] * n
+A = [0] * n
 for u, v, w in edges:
-    # 深い方へ寄せる
-    if hld.depth[u] > hld.depth[v]:
-        u, v = v, u
-    init_path[hld.id[v]] = w
+    # 辺の情報を、深い側の頂点に属するものとして扱う
+    if hld.depth[u] > hld.depth[v]: u, v = v, u
+    A[v] = w
+init_path = [A[v] for v in hld.vertex]
 LR_path = hld.path_ranges(2, 3, edge=True)
 print(f"{init_path=}")    
 print(f"2-3: {LR_path=}")    
