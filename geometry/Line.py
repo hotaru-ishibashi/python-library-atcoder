@@ -1,16 +1,27 @@
-from math import gcd
+from math import gcd, hypot
+
 class Line:
+    """
+    ax + by + c = 0
+    """
+
     __slots__ = ("a", "b", "c")
 
     def __init__(self, *args):
         if len(args) == 2:
-            # 2点 (x1,y1), (x2,y2)
+            # Line((x1,y1), (x2,y2))
             (x1, y1), (x2, y2) = args
+            if (x1, y1) == (x2, y2):
+                raise ValueError("points must be distinct")
+
             a = y1 - y2
             b = x2 - x1
             c = -(a * x1 + b * y1)
+
         elif len(args) == 3:
+            # Line(a, b, c)
             a, b, c = args
+
         else:
             raise TypeError("Line((x1,y1),(x2,y2)) or Line(a,b,c)")
 
@@ -23,7 +34,6 @@ class Line:
             b //= g
             c //= g
 
-        # 符号を統一
         if a < 0 or (a == 0 and b < 0):
             a, b, c = -a, -b, -c
 
@@ -31,34 +41,13 @@ class Line:
         self.b = b
         self.c = c
 
-    def contains(self, p):
-        x, y = p
-        return self.a * x + self.b * y + self.c == 0
-
-    def cross_point(self, other):
-        """
-        平行なら None
-        交点があれば (x, y) を返す (float)
-        """
-        det = self.a * other.b - other.a * self.b
-        if det == 0:
-            return None
-
-        x = (self.b * other.c - other.b * self.c) / det
-        y = (other.a * self.c - self.a * other.c) / det
-        return (x, y)
-
-    def same(self, other):
-        return (
-            self.a == other.a
-            and self.b == other.b
-            and self.c == other.c
-        )
-        
     @staticmethod
     def perpendicular_bisector(p1, p2):
         """
-        線分 p1-p2 の垂直二等分線を返す
+        p1 ●────×────● p2
+                 │
+                 │
+                 │
         """
         x1, y1 = p1
         x2, y2 = p2
@@ -69,18 +58,149 @@ class Line:
         dx = x2 - x1
         dy = y2 - y1
 
-        # 法線ベクトルは元の方向ベクトル (dx, dy)
         a = dx
         b = dy
         c = -(dx * (x1 + x2) + dy * (y1 + y2))
 
-        # 2倍しているので偶数なら割る
-        if a % 2 == 0 and b % 2 == 0 and c % 2 == 0:
+        if a % 2 == b % 2 == c % 2 == 0:
             a //= 2
             b //= 2
             c //= 2
 
         return Line(a, b, c)
 
+    @staticmethod
+    def through_point_parallel(line, p):
+        """
+               ● p
+        ───────────────
+           ↑ parallel
+        ───────────────
+        """
+        x, y = p
+        a, b = line.a, line.b
+        c = -(a * x + b * y)
+        return Line(a, b, c)
+
+    @staticmethod
+    def through_point_perpendicular(line, p):
+        """
+               │
+               │
+               ● p
+        ───────┼───────
+               │
+               │
+        """
+        x, y = p
+        a = -line.b
+        b = line.a
+        c = -(a * x + b * y)
+        return Line(a, b, c)
+
+    @property
+    def direction(self):
+        """
+        direction →
+        ────────────
+        """
+        return (-self.b, self.a)
+
+    def contains(self, p):
+        """● on line ?"""
+        x, y = p
+        return self.a * x + self.b * y + self.c == 0
+
+    def side(self, p):
+        """
+             +
+        ───────────
+             -
+        """
+        x, y = p
+        v = self.a * x + self.b * y + self.c
+        return (v > 0) - (v < 0)
+
+    def is_parallel(self, other):
+        """
+        ───────────
+        ───────────
+        """
+        return self.a * other.b == self.b * other.a
+
+    def is_perpendicular(self, other):
+        """
+             │
+             │
+        ─────┼─────
+             │
+        """
+        return self.a * other.a + self.b * other.b == 0
+
+    def cross_point(self, other):
+        """
+        \  /
+         \/
+         /\
+        /  \
+
+        parallel -> None
+        """
+        det = self.a * other.b - other.a * self.b
+        if det == 0:
+            return None
+
+        x = (self.b * other.c - other.b * self.c) / det
+        y = (other.a * self.c - self.a * other.c) / det
+        return (x, y)
+
+    def distance(self, p):
+        """
+        ●
+        │ shortest
+        │
+        ───────────
+        """
+        x, y = p
+        return abs(self.a * x + self.b * y + self.c) / hypot(self.a, self.b)
+
+    def project(self, p):
+        """
+        ●
+        │
+        ×──────────
+        """
+        x, y = p
+        t = -(self.a * x + self.b * y + self.c) / (
+            self.a * self.a + self.b * self.b
+        )
+        return (x + self.a * t, y + self.b * t)
+
+    def reflect(self, p):
+        """
+        ●
+        │
+        ×──────────
+        │
+        ●
+        """
+        x, y = p
+        t = -2 * (self.a * x + self.b * y + self.c) / (
+            self.a * self.a + self.b * self.b
+        )
+        return (x + self.a * t, y + self.b * t)
+
+    def __eq__(self, other):
+        if not isinstance(other, Line):
+            return NotImplemented
+        return (
+            self.a == other.a
+            and self.b == other.b
+            and self.c == other.c
+        )
+
     def __repr__(self):
         return f"Line({self.a}, {self.b}, {self.c})"
+    
+    def __hash__(self):
+        return hash((self.a, self.b, self.c))
