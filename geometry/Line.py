@@ -1,3 +1,4 @@
+from math import gcd
 class Line:
     __slots__ = ("a", "b", "c")
 
