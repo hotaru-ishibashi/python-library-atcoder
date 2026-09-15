@@ -1,21 +1,8 @@
-
-
 class UniqueLinkedList:
     def __init__(self):
         self.nodes = {}
         self.head = None
         self.tail = None
-
-    def appendleft(self, val):
-        assert not (val in self.nodes)
-        if self.head is None:
-            self.nodes[val] = [None, None]
-            self.head = val
-            self.tail = val
-            return
-        curhead = self.head
-        self.nodes[curhead][0] = val
-        self.nodes[val] = [None, curhead]
 
     def append(self, val):
         assert not (val in self.nodes)
@@ -27,6 +14,7 @@ class UniqueLinkedList:
         curtail = self.tail
         self.nodes[curtail][1] = val
         self.nodes[val] = [curtail, None]
+        self.tail = val
 
     """
     keyの要素の直後に挿入する
@@ -48,7 +36,14 @@ class UniqueLinkedList:
         assert key in self.nodes
 
         curprev, curnext = self.nodes[key]
-        
-        self.nodes[curprev][1] = curnext
-        self.nodes[curnext][0] = curprev
+        if curprev is not None:
+            self.nodes[curprev][1] = curnext
+        else:
+            self.head = curnext
 
+        if curnext is not None:
+            self.nodes[curnext][0] = curprev
+        else:
+            self.tail = curprev
+
+        del self.nodes[key]
