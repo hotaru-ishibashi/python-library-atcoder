@@ -1,5 +1,5 @@
 #pragma region template
-// https://github.com/hotaru-ishibashi/python-library-atcoder/blob/main/cpp/cpp.cpp
+
 #include <atcoder/all>
 #include <bits/stdc++.h>
 using namespace std;
@@ -52,7 +52,7 @@ template <class T>
 void _print(const T& x) {
     if constexpr (
         requires { x.begin(); x.end(); } &&
-        !is_same_v<T, string>
+        !is_same_v<remove_cvref_t<T>, string>
     ) {
         cerr << '[';
         bool first = true;
@@ -67,15 +67,32 @@ void _print(const T& x) {
     }
 }
 
-#define print(x) (cerr << #x << " = ", _print(x), cerr << '\n')
+template <class... Ts>
+void _print_args(const char* names, const Ts&... xs) {
+    vector<string> ns;
+    string s;
+    stringstream ss(names);
+    while (getline(ss, s, ',')) {
+        auto l = s.find_first_not_of(" \t");
+        auto r = s.find_last_not_of(" \t");
+        ns.push_back(l == string::npos ? "" : s.substr(l, r - l + 1));
+    }
+
+    size_t i = 0;
+    ((cerr << (i++ ? ", " : "")
+           << ns[i - 1] << " = ", _print(xs)), ...);
+}
+
+#define print(...) \
+    (_print_args(#__VA_ARGS__, __VA_ARGS__), cerr << '\n')
 
 #pragma endregion
 
 void solve() {
-    // ll N, M; cin >> N >> M;
+    // ll N; cin >> N;
+    // ll M; cin >> M;
     // vector<ll> A(N); cin >> A;
 
-    // ll ans = 0;
 	// cout << ans << endl;
 	return;
 }
