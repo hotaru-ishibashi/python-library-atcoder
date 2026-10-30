@@ -1,0 +1,7 @@
+{
+	"output vector": {
+		"prefix": "output",
+		"body": "rep(i, ans.size()) cout << ans[i] << (i+1==ans.size()?'\\n':' ');",
+		"description": "output answer vector splited by space"
+	}
+}
