@@ -92,6 +92,8 @@ void solve() {
     // ll N; cin >> N;
     // ll M; cin >> M;
     // vector<ll> A(N); cin >> A;
+    // vector<vector<ll>> A(N, vector<ll>(2, 0));  
+    // rep(i, N) {cin >> A[i][0] >> A[i][1];}
 
 	// cout << ans << endl;
 	return;
@@ -106,5 +108,6 @@ int main() {
 	while(test_case--) {
 		solve();
 	}
+    
 	return 0;
 }
